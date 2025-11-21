@@ -1,0 +1,3 @@
+--dir="$HOME/dotfiles-nix/home/"
+--target="$HOME"
+--adopt

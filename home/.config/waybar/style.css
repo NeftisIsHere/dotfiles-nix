@@ -1,0 +1,114 @@
+/* ========================================================================
+   Waybar - Fancy + Simple Pywal
+======================================================================== */
+
+@import url("file:///home/jazz/.cache/wal/colors-waybar.css");
+
+* {
+  font-family: JetBrainsMono Nerd Font, Iosevka Nerd Font, Roboto, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ----- BAR ------------------------------------------------------------- */
+window#waybar {
+  background-color: shade(@background, 0.9);
+  color: @foreground;
+  border-bottom: 2px solid @color8;
+  padding: 2px 6px;
+}
+
+window#waybar.hidden {
+  opacity: 0.2;
+}
+
+/* ----- WORKSPACES ------------------------------------------------------ */
+#workspaces button {
+  margin: 0 4px;
+  padding: 2px 6px;
+  background: transparent;
+  color: @color7;
+  border: none;
+  border-radius: 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+#workspaces button:hover {
+  color: @foreground;
+  border-bottom: 2px solid @color7;
+  border-radius: 0;
+}
+
+#workspaces button.active {
+  color: @color11;
+  border-bottom: 2px solid @color11;
+  border-radius: 0;
+}
+
+#workspaces button.urgent {
+  color: @color9;
+  border-bottom: 2px solid @color9;
+  border-radius: 0;
+}
+
+/* ----- CENTER TITLE ---------------------------------------------------- */
+#niri-window {
+  color: @foreground;
+  margin: 0 12px;
+  font-weight: 500;
+  min-width: 0;
+}
+
+/* ----- MODULES (right/left) ------------------------------------------- */
+#niri-language, #keyboard-state, #tray, #wireplumber,
+#backlight, #clock, #network, #idle_inhibitor,
+#custom-notification, #battery, #power-profiles-daemon {
+  background: transparent;
+  margin: 0 6px;
+  padding: 0 6px;
+  border-left: 1px solid shade(@background, 1.2);
+}
+
+/* ----- RAINBOW HINTS (text only, clean) ------------------------------- */
+#language            { color: @color2; }   /* green */
+#idle_inhibitor      { color: @color3; }   /* yellow */
+#wireplumber         { color: @color4; }   /* blue */
+#wireplumber.muted   { color: @color8; }
+#backlight           { color: @color13; }  /* magenta */
+#battery             { color: @color14; }  /* cyan */
+#clock               { color: @color12; }  /* blue */
+#custom-notification { color: @color3; }   /* yellow */
+#power-profiles-daemon { color: @color1; } /* red */
+
+/* battery + profiles fuse */
+#battery {
+  border-left: none;
+  padding-left: 6px;
+}
+#power-profiles-daemon {
+  margin-left: -4px;
+  padding-left: 4px;
+  border-left: 1px solid shade(@background, 1.2);
+}
+
+#battery.warning  { color: @color11; }
+#battery.critical { color: @color9; }
+#power-profiles-daemon.performance { color: @color9; }
+#power-profiles-daemon.balanced    { color: @color11; }
+#power-profiles-daemon.power-saver { color: @color10; }
+
+/* ----- HOVER EFFECTS -------------------------------------------------- */
+#language:hover,
+#wireplumber:hover,
+#backlight:hover,
+#clock:hover,
+#network:hover,
+#idle_inhibitor:hover,
+#custom-notification:hover,
+#battery:hover,
+#power-profiles-daemon:hover {
+  color: @foreground;
+  border-bottom: 2px solid @color7;
+}
+

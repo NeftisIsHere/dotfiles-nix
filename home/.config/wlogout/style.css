@@ -1,0 +1,109 @@
+/* ========================================================================
+   Wlogout - Gruvbox
+======================================================================== */
+
+@import url("/home/jazz/.cache/wal/colors-waybar.css");
+
+* {
+    background-image: none;
+    box-shadow: none;
+    font-family: JetBrainsMono Nerd Font, sans-serif;
+    font-size: 20px;
+    font-weight: bolder;
+}
+
+window {
+    background-color: alpha(@background, 0.6);
+}
+
+button {
+    border-radius: 6px;
+    background-color: @background;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 22%;
+    margin: 6px;
+    padding: 10px;
+    transition: background-color 0.2s, color 0.2s, border 0.2s;
+    color: @foreground;
+    border: 2px solid @color8;
+}
+
+/* Generic hover / active */
+button:focus,
+button:active,
+button:hover {
+    background-color: @color8;
+    outline-style: none;
+}
+
+/* -------------------------------
+   Gruvbox Rainbow
+-------------------------------- */
+
+/* Lock = Magenta */
+#lock {
+    background-image: image(url("/usr/share/wlogout/icons/lock.png"), url("/usr/local/share/wlogout/icons/lock.png"));
+    color: @color5;
+    border-color: @color5;
+}
+#lock:hover {
+    color: @color13;
+    border-color: @color13;
+}
+
+/* Logout = Blue */
+#logout {
+    background-image: image(url("/usr/share/wlogout/icons/logout.png"), url("/usr/local/share/wlogout/icons/logout.png"));
+    color: @color4;
+    border-color: @color4;
+}
+#logout:hover {
+    color: @color12;
+    border-color: @color12;
+}
+
+/* Suspend = Cyan */
+#suspend {
+    background-image: image(url("/usr/share/wlogout/icons/suspend.png"), url("/usr/local/share/wlogout/icons/suspend.png"));
+    color: @color6;
+    border-color: @color6;
+}
+#suspend:hover {
+    color: @color14;
+    border-color: @color14;
+}
+
+/* Hibernate = Green */
+#hibernate {
+    background-image: image(url("/usr/share/wlogout/icons/hibernate.png"), url("/usr/local/share/wlogout/icons/hibernate.png"));
+    color: @color2;
+    border-color: @color2;
+}
+#hibernate:hover {
+    color: @color10;
+    border-color: @color10;
+}
+
+/* Shutdown = Yellow */
+#shutdown {
+    background-image: image(url("/usr/share/wlogout/icons/shutdown.png"), url("/usr/local/share/wlogout/icons/shutdown.png"));
+    color: @color3;
+    border-color: @color3;
+}
+#shutdown:hover {
+    color: @color11;
+    border-color: @color11;
+}
+
+/* Reboot = Red */
+#reboot {
+    background-image: image(url("/usr/share/wlogout/icons/reboot.png"), url("/usr/local/share/wlogout/icons/reboot.png"));
+    color: @color1;
+    border-color: @color1;
+}
+#reboot:hover {
+    color: @color9;
+    border-color: @color9;
+}
+

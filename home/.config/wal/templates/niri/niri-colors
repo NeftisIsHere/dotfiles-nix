@@ -1,0 +1,16 @@
+layout {{
+    focus-ring {{
+        active-color "{color2}"
+    }}
+
+    border {{
+        active-color "{color2}"
+        inactive-color "{color8}"
+        urgent-color "{color9}"
+    }}
+
+    shadow {{
+        color "{background.rgba}"
+    }}
+}}
+

@@ -1,0 +1,28 @@
+# Utility
+alias systemlogs='journalctl -b'
+
+# Quick directory navigation
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+
+
+# Safety Nets
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+
+# More color!
+alias grep='grep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip -color=auto'
+alias ls='eza --icons --almost-all --group-directories-first'
+alias la='eza --long --almost-all --group --header --total-size'
+
+# Edit aliases or functions quickly
+alias edit-aliases='$EDITOR $dotconf/shells/.aliases'
+alias edit-functions='$EDITOR $dotconf/shells/.functions'
+
+
+alias start-docker='sudo systemctl start docker'

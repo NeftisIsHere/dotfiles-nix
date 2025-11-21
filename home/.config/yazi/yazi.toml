@@ -1,0 +1,5 @@
+import = ["home/jazz/.cache/wal/yazi-colors.toml"]
+[mgr]
+show_hidden = true
+show_symlink = false
+

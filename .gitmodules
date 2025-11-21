@@ -1,0 +1,3 @@
+[submodule ".dotfiles-wpp"]
+	path = home/wallpapers
+	url = git@github.com:NeftisIsHere/.dotfiles-wpp.git
