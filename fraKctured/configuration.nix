@@ -5,6 +5,7 @@
     [
       ./hardware-configuration.nix
       ./extra-drive.nix
+      ../modules/desktop/gnome/gnome-polkit.nix
     ];
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -70,8 +71,8 @@
   programs.starship.enable = true;
 
   # Trying to enable ssh agent
-  programs.ssh.startAgent = true;
-  services.gnome.gcr-ssh-agent.enable = false;
+  programs.ssh.startAgent = false;
+  services.gnome.gcr-ssh-agent.enable = true;
   services.gnome.gnome-keyring.enable = true;
 
   programs.seahorse.enable = true;

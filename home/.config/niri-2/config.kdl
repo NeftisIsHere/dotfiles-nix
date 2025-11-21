@@ -18,7 +18,7 @@ spawn-sh-at-startup "wl-paste --type image --watch cliphist store"
 input {
     keyboard {
         xkb {
-	    layout "es,latam"
+	    layout "latam"
             options "grp:win_space_toggle"
         }
         numlock
@@ -36,10 +36,10 @@ input {
     focus-follows-mouse max-scroll-amount="95%"
 }
 
-output "eDP-1" {
-    mode "1920x1080"
+/-output "eDP-1" {
+    mode "2880x1800@90.001"
     position x=0 y=0
-    scale 1.25
+    scale 2
     transform "normal"
 }
 
@@ -143,7 +143,7 @@ window-rule {
 
 window-rule {
     match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
-    default-floating-position x=10 y=10 relative-to="bottom-right"
+    default-floating-position x=10 y=20 relative-to="bottom-right"
 }
 /-window-rule {
     match app-id="gamescope"
