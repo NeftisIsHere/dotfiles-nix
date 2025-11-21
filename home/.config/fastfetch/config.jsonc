@@ -59,6 +59,12 @@
             "showPeCoreCount": true
         },
         {
+            "key": "│ {#35}󰢮 gpus     {#keys}│",
+            "type": "gpu",
+            "format": "{vendor} {name}"
+        },
+	
+        {
             "key": "│ {#35} ram      {#keys}│",
             "type": "memory"
         },

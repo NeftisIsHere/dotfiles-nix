@@ -37,6 +37,25 @@
           # }
         ];
       };
+
+      starless = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          ./starless/configuration.nix
+	  inputs.nix-flatpak.nixosModules.nix-flatpak
+          # inputs.home-manager.nixosModules.default
+          # {
+          #   home-manager = {
+          #     useGlobalPkgs = true;
+          #     useUserPackages = true;
+          #     users.jazz = import ./starless/home;
+          #     extraSpecialArgs = {
+          #       inherit inputs;
+          #     };
+          #   };
+          # }
+        ];
+      };
     };
   };
 }

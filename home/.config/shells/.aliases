@@ -24,5 +24,7 @@ alias la='eza --long --almost-all --group --header --total-size'
 alias edit-aliases='$EDITOR $dotconf/shells/.aliases'
 alias edit-functions='$EDITOR $dotconf/shells/.functions'
 
+alias switch-config='sudo nixos-rebuild switch --flake ~/dotfiles-nix'
+alias switchu-config='sudo nixos-rebuild switch --flake ~/dotfiles-nix --upgrade'
 
 alias start-docker='sudo systemctl start docker'
