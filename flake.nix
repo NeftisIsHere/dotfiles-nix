@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
+    niri.url = "github:sodiboo/niri-flake";
     # Home manager stuffs
     # home-manager = { 
     #   url = "github:nix-community/home-manager";
@@ -22,8 +23,9 @@
       fraKctured = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          ./fraKctured/configuration.nix
-	  inputs.nix-flatpak.nixosModules.nix-flatpak
+          ./hosts/fraKctured/configuration.nix
+          inputs.nix-flatpak.nixosModules.nix-flatpak
+          inputs.niri.nixosModules.niri
           # inputs.home-manager.nixosModules.default
           # {
           #   home-manager = {
@@ -36,13 +38,16 @@
           #   };
           # }
         ];
+        specialArgs = {
+          inherit inputs;
+        };
       };
 
       starless = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
-          ./starless/configuration.nix
-	  inputs.nix-flatpak.nixosModules.nix-flatpak
+          ./hosts/starless/configuration.nix
+          inputs.nix-flatpak.nixosModules.nix-flatpak
           # inputs.home-manager.nixosModules.default
           # {
           #   home-manager = {
@@ -55,6 +60,9 @@
           #   };
           # }
         ];
+        specialArgs = {
+          inherit inputs;
+        };
       };
     };
   };

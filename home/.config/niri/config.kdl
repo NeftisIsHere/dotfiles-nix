@@ -1,5 +1,5 @@
 // This config is in the KDL format: https://kdl.dev
-// include "colors.kdl"
+include "colors.kdl"
 
 environment {
     QT_QPA_PLATFORMTHEME "qt6ct"
@@ -63,7 +63,7 @@ layout {
     default-column-width { proportion 0.5; }
 
     focus-ring {
-        active-color "#b09b82"
+        //active-color "#b09b82"
 	width 2
     }
 
@@ -81,7 +81,7 @@ layout {
         spread 5
         offset x=0 y=5
         //color "#0007"
-        color "rgba(30,17,12,1.0)"
+        //color "rgba(30,17,12,1.0)"
     }
 
     struts {

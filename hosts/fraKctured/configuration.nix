@@ -1,14 +1,16 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports =
     [
       ./hardware-configuration.nix
       ./extra-drive.nix
-      ../modules/desktop/gnome/gnome-polkit.nix
+      ../../modules/desktop/gnome/gnome-polkit.nix
     ];
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # niri-flake.cache.enable = false;
 
   boot = {
     loader.systemd-boot.enable = true;
@@ -33,6 +35,8 @@
   console = {
     useXkbConfig = true;
   };
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Disable the X11 windowing system.
   services.xserver.enable = false;
@@ -67,7 +71,10 @@
   programs.firefox = {
     enable = true;
   };
+  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
   programs.niri.enable = true;
+  programs.niri.package = pkgs.niri-unstable;
+
   programs.starship.enable = true;
 
   # Trying to enable ssh agent
@@ -83,16 +90,10 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [
-      libva-vdpau-driver
-      mesa
-      libva
-      libvdpau-va-gl
-    ];
   };
 
   programs.steam.enable = true;
-  programs.steam.gamescopeSession.enable = true;
+  programs.steam.gamescopeSession.enable = false;
   programs.gamemode.enable = true;
 
 
@@ -120,7 +121,8 @@
   };
   systemd.services.mpd.environment = {
    # https://gitlab.freedesktop.org/pipewire/pipewire/-/issues/609
-   XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.jazz.uid}"; # User-id 1000 must match above user. MPD will look inside this directory for the PipeWire socket.
+    # XDG_RUNTIME_DIR = "/run/user/${toString config.users.users.jazz.uid}"; # User-id 1000 must match above user. MPD will look inside this directory for the PipeWire socket.
+   XDG_RUNTIME_DIR = "/run/user/1001/"; # User-id 1000 must match above user. MPD will look inside this directory for the PipeWire socket.
   };
 
   environment.systemPackages = with pkgs; [
@@ -153,7 +155,13 @@
     # For osu-winello
     zenity
 
-    chromium
+    (chromium.override {
+      commandLineArgs = [
+        "--enable-features=AcceleratedVideoEncoder"
+        "--ignore-gpu-blocklist"
+        "--enable-zero-copy"
+      ];
+    })
 
     mpv
     rmpc
@@ -174,7 +182,10 @@
     swww
     fuzzel
     bemoji
+    wtype
+    cliphist
     xwayland-satellite
+    brightnessctl
     waybar
     wayland-logout
     wlogout
