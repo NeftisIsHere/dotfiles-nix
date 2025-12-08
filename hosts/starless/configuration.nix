@@ -1,8 +1,7 @@
-# Configuration for laptop ASUS Vivobook pro 14
-# CPU: Intel Core i5-1130H 11th Gen
-# iGPU: Irix Xe Graphics
-# GPU: GeForce GTX 1650 Mobile / Max-Q
-# RAM: 8GB
+# Configuration for laptop being used as a shitty server lol
+# CPU: Intel(R) Celeron(R) N3050 (2) @ 2.16 GHz
+# GPU: Intel Atom/Celeron/Pentium Processor x5-E8000/J3xxx/N3xxx Integrated Graphics Controller @ 0.60 GHz [Integrated]
+# RAM: 4GB
 
 { config, lib, pkgs, ... }:
 
@@ -10,165 +9,55 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./../../modules/server
     ];
-  nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  # Enable Plymouth
-  boot.plymouth.enable = true;
 
-  boot.initrd.kernelModules = [
-    "i915"
-    "nvidia"
-    "nvidia_modeset"
-    "nvidia_uvm"
-    "nvidia_drm"
-  ];
-
-  boot.kernelParams = [
-    "rd.driver.blacklist=nouveau"
-    "nvidia-drm.modeset=1"
-    "loglevel=3"
-    "quiet"
-    "splash"
-  ];
+  nixpkgs.config.allowUnfree = true;
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.hostName = "starless";
-  networking.networkmanager.enable = true;  # Easiest to use and most distros use this by default.
+  networking.networkmanager.enable = true;
 
   time.timeZone = "America/Santiago";
 
-  i18n = {
-    defaultLocale = "es_CL.UTF-8";
-    extraLocaleSettings = {
-      LC_MESSAGES = "en_US.UTF-8";
-    };
-  };
+  i18n.defaultLocale = "en_US.UTF-8";
   console = {
+    font = "Lat2-Terminus16";
     useXkbConfig = true;
   };
-  # Enable the X11 windowing system.
-  services.xserver.enable = false;
-  
-  services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
-  hardware.graphics.enable = true;
-  hardware.nvidia.open = false;
-  hardware.nvidia.prime = {
-    offload.enable = true;
-    offload.enableOffloadCmd = true;
-    intelBusId = "PCI:0:2:0";
-    nvidiaBusId = "PCI:1:0:0";
-  };
 
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-
-  # Configure keymap in X11
   services.xserver.xkb.layout = "latam";
-  services.printing.enable = true;
 
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.jazz = {
     isNormalUser = true;
-    description = "Jazmin Irene Vallejos Cartes";
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "networkmanager" ];
+    packages = with pkgs; [
+      tree
+      fastfetch
+      unzip
+    ];
   };
-
-  programs.firefox.enable = true;
-  programs.niri.enable = true;
-  programs.starship.enable = true;
-
-
-  programs.steam.enable = true;
-  programs.steam.package = pkgs.steam.override {
-    extraArgs = "-system-composer";
-  };
-  programs.steam.gamescopeSession.enable = true;
-  programs.gamemode.enable = true;
 
   environment.systemPackages = with pkgs; [
-    tree
-    foot
-    vscode
     git
-    gcc
-    lua
-    go
-    cmake
-    gnumake
-    devenv
-
-
-    statix
-    deadnix
-    nixfmt-rfc-style
-
-    # GAMING
-    mangohud
-    lutris
-    heroic
-    gcc
-    unzip
-
-    # Minecraft
-    prismlauncher
-    javaPackages.compiler.temurin-bin.jre-17
-
-    # For osu-winello
-    zenity
-
-    chromium
-
-    mpv
-    rmpc
-
-
+    wget
     vim
     neovim
     fastfetch
     stow
     wget
     eza
-    cmatrix
-    cava
-    cbonsai
     btop
     htop
-    alacritty
-    swww
-    fuzzel
-    bemoji
-    xwayland-satellite
-    waybar
-    wayland-logout
-    wlogout
-    swaynotificationcenter
-    #replace
-    hyprlock
-    swaylock
-    #replace
-    hypridle
-    swayidle
 
-    (yazi.override {
+    yazi.override {
       _7zz = _7zz-rar;
     })
     p7zip-rar
@@ -183,33 +72,44 @@
     wl-clipboard
     zoxide
 
-    legcord
-
-    nicotine-plus
-
-    qbittorrent
-
-    piper
-    libayatana-appindicator
   ];
 
   fonts.packages = with pkgs; [
-    corefonts
-    dejavu_fonts
-    font-awesome
-    liberation_ttf
-    noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    nerd-fonts.noto
-    nerd-fonts.dejavu-sans-mono
     nerd-fonts.fira-mono
-    nerd-fonts.fira-code
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.iosevka
-    nerd-fonts.hack
   ];
 
+
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+
+  # Open ports in the firewall.
+  networking.firewall.allowedTCPPorts = [ 8000 ];
+  # networking.firewall.allowedUDPPorts = [ ... ];
+  # Or disable the firewall altogether.
+  # networking.firewall.enable = false;
+
+  # Copy the NixOS configuration file and link it from the resulting system
+  # (/run/current-system/configuration.nix). This is useful in case you
+  # accidentally delete configuration.nix.
+  # system.copySystemConfiguration = true;
+
+  # This option defines the first version of NixOS you have installed on this particular machine,
+  # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
+  #
+  # Most users should NEVER change this value after the initial install, for any reason,
+  # even if you've upgraded your system to a new NixOS release.
+  #
+  # This value does NOT affect the Nixpkgs version your packages and OS are pulled from,
+  # so changing it will NOT upgrade your system - see https://nixos.org/manual/nixos/stable/#sec-upgrading for how
+  # to actually do that.
+  #
+  # This value being lower than the current NixOS release does NOT mean your system is
+  # out of date, out of support, or vulnerable.
+  #
+  # Do NOT change this value unless you have manually inspected all the changes it would make to your configuration,
+  # and migrated your data accordingly.
+  #
+  # For more information, see `man configuration.nix` or https://nixos.org/manual/nixos/stable/options#opt-system.stateVersion .
   system.stateVersion = "25.05"; # Did you read the comment?
 
 }
