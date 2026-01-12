@@ -4,7 +4,7 @@
   imports =
     [
       ./hardware-configuration.nix
-      ./extra-drive.nix
+      ./entry-default.nix
       ../../modules/desktop/gnome/gnome-polkit.nix
     ];
   nixpkgs.config.allowUnfree = true;
@@ -59,7 +59,7 @@
     pulse.enable = true;
   };
 
-  users.users.jazz = {
+  users.users.jazmin = {
     isNormalUser = true;
     description = "Jazmin Irene Vallejos Cartes";
     extraGroups = [ "wheel" "networkmanager" ];
@@ -97,31 +97,31 @@
   programs.gamemode.enable = true;
 
 
-  services.mpd = {
-    enable = true;
-    user = "jazz";
-    musicDirectory = "/home/jazz/Music";
-    playlistDirectory = "/home/jazz/Documents/Playlists";
-    # network.listenAddress = "any"; # if you want to allow non-localhost connections
-    startWhenNeeded = true;
-    extraConfig = ''
-      restore_paused "yes"
-      max_output_buffer_size "16384"
-      audio_output {
-        type "pipewire"
-        name "PipeWire Sound Server"
-      }
-      audio_output {
-        type    "fifo"
-        name    "my_fifo"
-        path    "/tmp/mpd.fifo"
-        format  "44100:16:2"
-      }
-    '';
-  };
-  systemd.services.mpd.environment = {
-   XDG_RUNTIME_DIR = "/run/user/1001/";
-  };
+  # services.mpd = {
+  #   enable = true;
+  #   user = "jazmin";
+  #   musicDirectory = "/home/jazmin/Music";
+  #   playlistDirectory = "/home/jazmin/Documents/Playlists";
+  #   # network.listenAddress = "any"; # if you want to allow non-localhost connections
+  #   startWhenNeeded = true;
+  #   # extraConfig = ''
+  #   #   restore_paused "yes"
+  #   #   max_output_buffer_size "16384"
+  #   #   audio_output {
+  #   #     type "pipewire"
+  #   #     name "PipeWire Sound Server"
+  #   #   }
+  #   #   audio_output {
+  #   #     type    "fifo"
+  #   #     name    "my_fifo"
+  #   #     path    "/tmp/mpd.fifo"
+  #   #     format  "44100:16:2"
+  #   #   }
+  #   # '';
+  # };
+  # systemd.services.mpd.environment = {
+  #  XDG_RUNTIME_DIR = "/run/user/1000/";
+  # };
 
   environment.systemPackages = with pkgs; [
     # dev
@@ -137,7 +137,7 @@
 
     statix
     deadnix
-    nixfmt-rfc-style
+    nixfmt
 
     # GAMING
     mangohud
@@ -168,6 +168,7 @@
     vim
     neovim
     fastfetch
+    hyfetch
     stow
     wget
     eza
@@ -238,26 +239,26 @@
   ];
 
   # List services that you want to enable:
-  services.flatpak = {
-    enable = true;
-    remotes = [
-      {
-        name = "flathub";
-        location = "https://flathub.org/repo/flathub.flatpakrepo";
-      }
-      {
-        name = "launcher.moe";
-        location = "https://gol.launcher.moe/gol.launcher.moe.flatpakrepo";
-      }
-    ];
-    packages = [
-      # "com.obsproject.Studio"
-      "com.saivert.pwvucontrol"
-      "com.vysp3r.ProtonPlus"
-      "net.waterfox.waterfox"
-      { appId = "moe.launcher.the-honkers-railway-launcher"; origin = "launcher.moe"; }
-    ];
-  };
+  # services.flatpak = {
+  #   enable = true;
+  #   remotes = [
+  #     {
+  #       name = "flathub";
+  #       location = "https://flathub.org/repo/flathub.flatpakrepo";
+  #     }
+  #     {
+  #       name = "launcher.moe";
+  #       location = "https://gol.launcher.moe/gol.launcher.moe.flatpakrepo";
+  #     }
+  #   ];
+  #   # packages = [
+  #   #   # "com.obsproject.Studio"
+  #   #   "com.saivert.pwvucontrol"
+  #   #   "com.vysp3r.ProtonPlus"
+  #   #   "net.waterfox.waterfox"
+  #   #   { appId = "moe.launcher.the-honkers-railway-launcher"; origin = "launcher.moe"; }
+  #   # ];
+  # };
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
