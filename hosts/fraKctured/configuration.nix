@@ -4,7 +4,6 @@
   imports =
     [
       ./hardware-configuration.nix
-      ./entry-default.nix
       ../../modules/desktop/gnome/gnome-polkit.nix
     ];
   nixpkgs.config.allowUnfree = true;
@@ -17,7 +16,7 @@
     loader.efi.canTouchEfiVariables = true;
     kernelPackages = pkgs.linuxPackages_latest;
     supportedFilesystems = [ "ntfs" ];
-    plymouth.enable = true;
+    plymouth.enable = false;
   };
 
   networking = {
@@ -45,7 +44,7 @@
 
   # Enable the GNOME Desktop Environment.
   services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+  services.desktopManager.gnome.enable = false;
 
   services.xserver.xkb.layout = "latam";
   services.printing.enable = true;
@@ -130,6 +129,7 @@
     gcc
     lua
     go
+    tmux
     cmake
     gnumake
     devenv
